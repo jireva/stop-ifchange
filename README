@@ -1,0 +1,8 @@
+stop-ifchange: Automate file integrity checks
+
+If a file has a corresponding file.md5, check the sum,
+otherwise, hash the file to create file.md5.
+
+Include a call to stop-ifchange at the top
+of any script whose inputs should not change.
+

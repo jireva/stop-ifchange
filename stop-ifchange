@@ -1,0 +1,27 @@
+#!/usr/local/plan9/bin/rc -e
+# stop-ifchange: Automate file integrity checks
+#
+# 	If a file has a corresponding file.md5, check the sum,
+# 	otherwise, hash the file to create file.md5.
+. 9.rc
+fn die {
+	echo $0^':' $"* >[1=2]
+	exit 1
+}
+args='files...'
+if(~ $#* 0){
+	usage
+	exit usage
+}
+for (file) {
+	test -f $"file || die $file does not exist or is not a plain file
+}
+for (file) {
+	if (test -f $"file^'.md5') {
+		cmp  -s <{md5sum $"file} <{cat $"file^'.md5'} || die $file has changed!
+	}
+	if not {
+		md5sum $"file > $"file^'.md5'
+		echo $0^':' hashing $file >[1=2]
+	}
+}
