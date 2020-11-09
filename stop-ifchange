@@ -14,7 +14,7 @@ if(~ $#* 0){
 	exit usage
 }
 for (file) {
-	test -f $"file || die $file does not exist or is not a plain file
+	test -f $"file || die $file does not exist or is not a plain file.
 }
 for (file) {
 	if (test -f $"file^'.md5') {
@@ -22,6 +22,6 @@ for (file) {
 	}
 	if not {
 		md5sum $"file > $"file^'.md5'
-		echo $0^':' hashing $file >[1=2]
+		echo $0^':' hashing $file for the first time. >[1=2]
 	}
 }
